@@ -7,8 +7,10 @@ const colors = {
     messageBoardGray: '#D9D9D9',
     menuBorderGray: '#BEBEBE',
     menuTextBlack: '#5E5E5E',
+    postTagGray: '#DCDCDC',
 
     profileNameGreen: '#0EA371',
+    profileSetText: '#545454',
 }
 
 export default colors;

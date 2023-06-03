@@ -17,7 +17,7 @@ const settingImg = require('../assets/setting_icon.png');
 const profileImg = require('../assets/profile_img.png');
 const profileName = '현희';
 
-function UserInfoScreen({navigation}) {
+function ProfileSettingScreen({navigation}) {
   return (
     <View style={styles.container}>
         <StatusBar style='auto'></StatusBar>
@@ -26,13 +26,13 @@ function UserInfoScreen({navigation}) {
                 <TouchableOpacity onPress={() => navigation.pop()} style={styles.headerLeft}>
                     <Image source={goBackImg}></Image>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('ProfileSetting')} style={styles.headerRight}>
-                    <Image source={settingImg}></Image>
-                </TouchableOpacity>
             </View>
             <View style={styles.userInfo}>
                 <Image style={styles.userInfoImage} source={profileImg}></Image>
                 <Text style={styles.userInfoText}>{profileName}</Text>
+                <TouchableOpacity>
+                    <Text style={styles.userInfoSetBtn}>프로필 수정</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.userInfoList}>
 
@@ -43,7 +43,7 @@ function UserInfoScreen({navigation}) {
   );
 }
 
-export default UserInfoScreen;
+export default ProfileSettingScreen;
 
 const styles = StyleSheet.create({
     container:{
@@ -72,12 +72,22 @@ const styles = StyleSheet.create({
         flex:4,
         paddingTop:40,
         alignItems:'center',
+        //backgroundColor:'yellow',
     },
     userInfoImage:{
     },
     userInfoText:{
         fontSize:36,
         color:colors.profileNameGreen,
+        marginVertical:5,
+    },
+    userInfoSetBtn:{
+        fontSize:15,
+        backgroundColor:colors.messageBoardGray,
+        color:colors.profileSetText,
+        paddingVertical:5,
+        paddingHorizontal:10,
+        borderRadius:10,
     },
     userInfoList:{
         flex:8,

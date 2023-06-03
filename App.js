@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import CommunityScreen from './screens/CommunityScreen.js';
 import NotificationScreen from './screens/NotificationScreen.js';
 import UserUserInfoScreen from './screens/UserInfoScreen.js';
+import ProfileSettingScreen from './screens/ProfileSettingScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ export default function App() {
         <Stack.Screen name="Community" component={CommunityScreen} />
         <Stack.Screen name="Notification" component={NotificationScreen} />
         <Stack.Screen name="UserInfo" component={UserUserInfoScreen} />
+        <Stack.Screen name="ProfileSetting" component={ProfileSettingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
