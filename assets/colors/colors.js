@@ -7,7 +7,12 @@ const colors = {
     messageBoardGray: '#D9D9D9',
     menuBorderGray: '#BEBEBE',
     menuTextBlack: '#5E5E5E',
-    postTagGray: '#DCDCDC',
+    postTagGray: '#E7E7E7',
+    postTagBorderGray: '#DCDCDC',
+    postContentGray: '#4E4E4E',
+    postLineGray: '#D7D7D7',
+    postInfoTextGray: '#999999',
+    postInfoTime: '#C0C0C0',
 
     profileNameGreen: '#0EA371',
     profileSetText: '#545454',

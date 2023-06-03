@@ -116,17 +116,14 @@ const styles = StyleSheet.create({
   notificationText:{
     color:colors.gray,
     fontSize:15,
-    fontWeight:4,
   },
   notificationGreenText:{
     color:colors.green,
     fontSize:15,
-    fontWeight:4,
   },
   notificationRedText:{
     color:colors.red,
     fontSize:15,
-    fontWeight:4,
   }
 
 

@@ -7,10 +7,11 @@ const searchImg = require('../assets/search_icon.png');
 const notifyImg = require('../assets/notification_icon.png');
 const userInfoImg = require('../assets/user_info_icon.png');
 const likeImg = require('../assets/like_btn.png');
+const commentImg = require('../assets/comment_img.png');
 
 const postImg = require('../assets/post_image.png');
 const tagMenuData = [['음식 자랑'], ['일상'], ['질문글'], ['기타'], ['test']];
-const postData = [['tag 1', '글 1', '내용 1', postImg], ['tag 2', '글 2', '내용 2', postImg], ['tag 3', '글 3', '내용 3'], ['tag 4', '글 4', '내용 4'], ['tag 5', '글 5', '내용 5'], ['tag 6', '글 6', '내용 6']]
+const postData = [['tag 1', '글 1', '내용 1', postImg, '23', '3'], ['tag 2', '글 2', '내용 2', postImg], ['tag 3', '글 3', '내용 3'], ['tag 4', '글 4', '내용 4'], ['tag 5', '글 5', '내용 5'], ['tag 6', '글 6', '내용 6']]
 
 function CommunityScreen({navigation}) {
   return (
@@ -55,22 +56,28 @@ function CommunityScreen({navigation}) {
             <ScrollView showsVerticalScrollIndicator={false}>
                 {postData.map((post, index) => (
                     <View style={styles.postItem}>
-                        <View key={index} style={styles.postMessage}>
+                        <View key={index} style={styles.postItemUpper}>
                             <View style={styles.postItemText}>
                                 <Text style={styles.postTag}>{post[0]}</Text>
                                 <Text style={styles.postTitle}>{post[1]}</Text>
                                 <Text style={styles.postContent}>{post[2]}</Text>
                             </View>
                             <View style={styles.postItemImg}>
-                                <Image style={styles.postItemImage} source={post[3]}></Image>
+                                <Image style={styles.postImage} source={post[3]}></Image>
                             </View>
                         </View>
-                        <View style={styles.postInfo}>
-                            <View>
-                                <Image source={likeImg}></Image>
-                            </View>
-                            <View>
+                        <View style={{height:1, backgroundColor:colors.postLineGray}}>
 
+                        </View>
+                        <View style={styles.postInfo}>
+                            <View style={styles.postInfoLeft}>
+                                <Image source={likeImg} style={styles.postInfoIcon}></Image>
+                                <Text style={styles.postInfoText}>{post[4]}</Text>
+                                <Image source={commentImg} style={styles.postInfoIcon}></Image>
+                                <Text style={styles.postInfoText}>{post[5]}</Text>
+                            </View>
+                            <View style={styles.postInfoRight}>
+                                <Text style={styles.postInfoTime}>1분 전</Text>
                             </View>
                         </View>
                     </View>
@@ -102,31 +109,37 @@ const headerStyles = StyleSheet.create({
         backgroundColor: colors.headerGreen,
         justifyContent: 'center',
         paddingHorizontal: 20,
-        paddingTop:20,
+        paddingTop:10,
     },
     upperHeader:{
         flexDirection: 'row',
         flex:1,
+        //backgroundColor:'green',
     },
     upperLeftHeader:{
         flex:2,
         paddingStart:5,
+        //backgroundColor:'blue',
+        justifyContent:'center',
     },
     headerText:{
         fontSize:24,
         color:'white',
     },
     upperRightHeader:{
-        flex:1,
+        flex:2,
         flexDirection: 'row',
-        paddingEnd:20,
+        justifyContent:'flex-end',
+        alignItems:'center',
+        //backgroundColor:'gray',
     },
     headerButton:{
         marginHorizontal:10,
     },
     lowerHeader:{
-        flexDirection: 'row',
         flex:1,
+        flexDirection: 'row',
+        //backgroundColor: 'yellow',
     },
     tagMenu:{
         flex:1,
@@ -163,36 +176,73 @@ const styles = StyleSheet.create({
         paddingHorizontal:15,
         paddingVertical:10,
     },
-    postMessage:{
+    postItemUpper:{
         flex:3,
         flexDirection:'row',
         marginBottom:15,
     },
     postItemText:{
         flex:5,
-        backgroundColor:'yellow'
+        //backgroundColor:'yellow'
     },
     postTag:{
         fontSize:10,
         backgroundColor:colors.postTagGray,
+        borderRadius:4,
+        borderColor:colors.postTagBorderGray,
+        borderWidth:1,
+        marginBottom:5,
+        paddingHorizontal:10,
+        paddingVertical:3,
+        alignSelf: 'flex-start',
     },
     postTitle:{
         fontSize:14,
+        marginBottom:10,
+        color:'black',
+        marginLeft:5,
     },
     postContent:{
         fontSize:14,
+        color:colors.postContentGray,
+        marginLeft:5,
     },
     postItemImg:{
         flex:2,
-        backgroundColor:'red'
+        //backgroundColor:'red'
     },
-    postItemImage:{
+    postImage:{
         width: '100%',
         height: '100%',
         resizeMode: 'contain',
     },
     postInfo:{
         flex:1,
+        flexDirection:'row',
+        //backgroundColor:'blue',
+        marginTop:10,
+        alignItems:'center',
+    },
+    postInfoLeft:{
+        flex:5,
+        flexDirection:'row',
+    },
+    postInfoIcon:{
+        marginHorizontal:6,
+    },
+    postInfoText:{
+        marginEnd:20,
+        color:colors.postInfoTextGray,
+    },
+    postInfoRight:{
+        flex:2,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginEnd:15,
+    },
+    postInfoTime:{
+        fontSize:10,
+        color:colors.postInfoTime,
     },
     menuBar:{
         flex:2,
