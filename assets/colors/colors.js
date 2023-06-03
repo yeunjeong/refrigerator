@@ -4,6 +4,8 @@ const colors = {
     red: '#E04848',
 
     headerGreen: '#70CBAC',
+    headerBtnGreen: '#0EA371',
+    headerBtnBorderGray:'#32B489B2',
     messageBoardGray: '#D9D9D9',
     menuBorderGray: '#BEBEBE',
     menuTextBlack: '#5E5E5E',

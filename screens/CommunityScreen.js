@@ -6,11 +6,12 @@ import colors from '../assets/colors/colors';
 const searchImg = require('../assets/search_icon.png');
 const notifyImg = require('../assets/notification_icon.png');
 const userInfoImg = require('../assets/user_info_icon.png');
+const plusImg = require('../assets/plus_icon.png');
 const likeImg = require('../assets/like_btn.png');
 const commentImg = require('../assets/comment_img.png');
 
 const postImg = require('../assets/post_image.png');
-const tagMenuData = [['음식 자랑'], ['일상'], ['질문글'], ['기타'], ['test']];
+const tagMenuData = [['음식 자랑'], ['일상'], ['질문글'], ['기타']];
 const postData = [['tag 1', '글 1', '내용 1', postImg, '23', '3'], ['tag 2', '글 2', '내용 2', postImg], ['tag 3', '글 3', '내용 3'], ['tag 4', '글 4', '내용 4'], ['tag 5', '글 5', '내용 5'], ['tag 6', '글 6', '내용 6']]
 
 function CommunityScreen({navigation}) {
@@ -38,6 +39,19 @@ function CommunityScreen({navigation}) {
             
         </View>
         <View style={headerStyles.lowerHeader}>
+            <View style={headerStyles.lowerLeftHeader}>
+                <TouchableOpacity>
+                    <View style={headerStyles.lowerHeaderBtn}>
+                        <Text style={headerStyles.lowerHeaderBtnText1}>게시판</Text>
+                        <Text style={headerStyles.lowerHeaderBtnText2}>중고거래</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+            <View style={headerStyles.lowerRightHeader}>
+                <TouchableOpacity onPress={() => navigation.navigate('Posting')}>
+                    <Image style={headerStyles.headerButton} source={plusImg}></Image>
+                </TouchableOpacity>
+            </View>
 
         </View>
       </View>
@@ -139,7 +153,45 @@ const headerStyles = StyleSheet.create({
     lowerHeader:{
         flex:1,
         flexDirection: 'row',
+        paddingBottom:5,
         //backgroundColor: 'yellow',
+    },
+    lowerLeftHeader:{
+        flex:2,
+        flexDirection:'row',
+        //backgroundColor:'tomato',    
+        justifyContent:'center', 
+        alignItems:'center',        
+    },
+    lowerHeaderBtn:{
+        flexDirection:'row',
+        backgroundColor:'white',
+        borderRadius:16,
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    lowerHeaderBtnText1:{
+        backgroundColor:colors.headerBtnGreen,
+        color:'white',
+        fontSize:18,
+        borderRadius:16,
+        borderColor:colors.headerBtnBorderGray,
+        borderWidth:1,
+        paddingVertical:7,
+        paddingHorizontal:14,
+        marginEnd:8,
+    },
+    lowerHeaderBtnText2:{
+        fontSize:18,
+        paddingEnd:15,
+    },
+    lowerRightHeader:{
+        flex:2,
+        //backgroundColor:'pink',
+        flexDirection: 'row',
+        justifyContent:'flex-end',
+        alignItems:'center',
+
     },
     tagMenu:{
         flex:1,
@@ -156,7 +208,7 @@ const headerStyles = StyleSheet.create({
         borderWidth:1,
         borderColor:colors.menuBorderGray,
         borderRadius:4,
-        paddingHorizontal:15,
+        paddingHorizontal:20,
         paddingVertical:5,
     },
 })
