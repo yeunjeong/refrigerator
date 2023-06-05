@@ -18,6 +18,9 @@ const colors = {
 
     profileNameGreen: '#0EA371',
     profileSetText: '#545454',
+
+    logOutBtnGreen: '#32B489B2',
+
 }
 
 export default colors;

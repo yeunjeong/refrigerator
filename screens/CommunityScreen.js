@@ -59,7 +59,9 @@ function CommunityScreen({navigation}) {
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {tagMenuData.map((tagMenu, index) => (
               <View key={index} style={headerStyles.tagMenuItem}>
-                <Text style={headerStyles.tagMenuText}>{tagMenu[0]}</Text>
+                <TouchableOpacity>
+                    <Text style={headerStyles.tagMenuText}>{tagMenu[0]}</Text>
+                </TouchableOpacity>
               </View>
             ))}
         </ScrollView>
@@ -70,24 +72,32 @@ function CommunityScreen({navigation}) {
             <ScrollView showsVerticalScrollIndicator={false}>
                 {postData.map((post, index) => (
                     <View style={styles.postItem}>
-                        <View key={index} style={styles.postItemUpper}>
-                            <View style={styles.postItemText}>
-                                <Text style={styles.postTag}>{post[0]}</Text>
-                                <Text style={styles.postTitle}>{post[1]}</Text>
-                                <Text style={styles.postContent}>{post[2]}</Text>
+                        <TouchableOpacity>
+                            <View key={index} style={styles.postItemUpper}>
+                                <View style={styles.postItemText}>
+                                    <Text style={styles.postTag}>{post[0]}</Text>
+                                    <Text style={styles.postTitle}>{post[1]}</Text>
+                                    <Text style={styles.postContent}>{post[2]}</Text>
+                                </View>
+                                <View style={styles.postItemImg}>
+                                    <Image style={styles.postImage} source={post[3]}></Image>
+                                </View>
                             </View>
-                            <View style={styles.postItemImg}>
-                                <Image style={styles.postImage} source={post[3]}></Image>
-                            </View>
-                        </View>
+
+                        </TouchableOpacity>
+                        
                         <View style={{height:1, backgroundColor:colors.postLineGray}}>
 
                         </View>
                         <View style={styles.postInfo}>
                             <View style={styles.postInfoLeft}>
-                                <Image source={likeImg} style={styles.postInfoIcon}></Image>
+                                <TouchableOpacity>
+                                    <Image source={likeImg} style={styles.postInfoIcon}></Image>
+                                </TouchableOpacity>
                                 <Text style={styles.postInfoText}>{post[4]}</Text>
-                                <Image source={commentImg} style={styles.postInfoIcon}></Image>
+                                <TouchableOpacity>
+                                    <Image source={commentImg} style={styles.postInfoIcon}></Image>
+                                </TouchableOpacity>
                                 <Text style={styles.postInfoText}>{post[5]}</Text>
                             </View>
                             <View style={styles.postInfoRight}>
@@ -95,7 +105,6 @@ function CommunityScreen({navigation}) {
                             </View>
                         </View>
                     </View>
-                    
                 ))}
             </ScrollView>
 
