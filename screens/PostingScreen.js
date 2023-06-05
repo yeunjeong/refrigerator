@@ -31,12 +31,12 @@ function PostingScreen({ navigation }) {
   const handleSubmit = () => {
     // API 요청
     const data = {
-        title: title,
-        content: content,
-        img: '',
-        type: '자유',
-        category_id: 1,
-        user_id: 'test',
+        title: title, //string
+        content: content, //string
+        img: '', //test
+        type: '자유', //test
+        category_id: 1, //test
+        user_id: 'test', //test
     };
 
     fetch('http://3.104.80.58:8080/api/v1/board', {
