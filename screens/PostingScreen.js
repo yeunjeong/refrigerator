@@ -1,5 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
+import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import {
   StyleSheet,
@@ -12,11 +13,16 @@ import {
   TextInput } from 'react-native';
 import colors from '../assets/colors/colors';
 
+const imageAdd = require('../assets/image_add.png');
+
 
 function PostingScreen({ navigation }) {
   const [title, setTitle] = useState('');
   const [tag, setTag] = useState('');
   const [content, setContent] = useState(''); 
+  const [imageUri, setImageUri] = useState(null);
+  const [imageName, setImageName] = useState('');
+  const [imageType, setImageType] = useState('');
 
   const handleTitleChange = (text) => {
     setTitle(text);
@@ -30,21 +36,24 @@ function PostingScreen({ navigation }) {
 
   const handleSubmit = () => {
     // API 요청
-    const data = {
-        title: title, //string
-        content: content, //string
-        img: '', //test
-        type: '자유', //test
-        category_id: 1, //test
-        user_id: 'test', //test
-    };
+    const data = new FormData();
+    data.append('title', title);
+    data.append('content', content);
+    data.append('img', {
+      uri: imageUri,
+      type: imageName, 
+      name: imageType, 
+    });
+    data.append('type', '자유');
+    data.append('category_id', 1);
+    data.append('user_id', 'test');
 
     fetch('http://3.104.80.58:8080/api/v1/board', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data', 
       },
-      body: JSON.stringify(data),
+      body: data,
     })
       .then((response) => response.json())
       .then((responseData) => {
@@ -56,6 +65,26 @@ function PostingScreen({ navigation }) {
         console.error(error);
       });
 
+  };
+
+  const selectImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        const selectedAsset = result.assets[0];
+        setImageUri(selectedAsset.uri);
+        setImageName(selectedAsset.name);
+        setImageType(selectedAsset.type);
+      }
+    } catch (error) {
+      console.log('Error while selecting image:', error);
+    }
   };
 
   return (
@@ -101,9 +130,15 @@ function PostingScreen({ navigation }) {
                 multiline
             ></TextInput>
         </View>
-
       </View>
-      
+      <View style={styles.postImageAdd}>
+        <TouchableOpacity style={{flexDirection:'row'}} onPress={selectImage}>
+            <Image source={imageAdd}></Image>
+            <Text style={styles.postImageText}>사진</Text>
+            
+        </TouchableOpacity>
+        {imageUri && <Image source={{ uri: imageUri }} style={{ width: 50, height: 50, marginLeft:10 }} />}
+      </View>
     </View>
   );
 }
@@ -145,7 +180,7 @@ const styles = StyleSheet.create({
     color:'white',
   },
   postInput:{
-    flex:14,
+    flex:13,
     backgroundColor:'white',
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
@@ -171,6 +206,17 @@ const styles = StyleSheet.create({
   contentInputText:{
     fontSize:24,
   },
-  
+  postImageAdd:{
+    flex:1,
+    flexDirection:'row',
+    backgroundColor:'white',
+    alignItems:'flex-end',
+    justifyContent:'flex-start',
+    padding:20,
+  },
+  postImageText:{
+    fontSize:24,
+    marginHorizontal:5,
+  },
 
 })
