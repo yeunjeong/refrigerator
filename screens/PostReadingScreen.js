@@ -147,7 +147,7 @@ function UserInfoScreen({navigation}) {
                                 flex:1,
                                 alignItems:'flex-end',
                             }}>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={() => navigation.navigate('PostRewriting')}>
                                     <Image source={rewriteImg}></Image>
                                 </TouchableOpacity>
                             </View>

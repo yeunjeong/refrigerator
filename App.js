@@ -6,6 +6,7 @@ import CommunityScreen from './screens/CommunityScreen.js';
 import NotificationScreen from './screens/NotificationScreen.js';
 import PostingScreen from './screens/PostingScreen.js';
 import PostReadingScreen from './screens/PostReadingScreen.js';
+import PostRewritingScreen from './screens/PostRewritingScreen.js';
 import UserUserInfoScreen from './screens/UserInfoScreen.js';
 import ProfileSettingScreen from './screens/ProfileSettingScreen.js';
 
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Screen name="Notification" component={NotificationScreen} />
         <Stack.Screen name="Posting" component={PostingScreen} />
         <Stack.Screen name="PostReading" component={PostReadingScreen} />
+        <Stack.Screen name="PostRewriting" component={PostRewritingScreen} />
         <Stack.Screen name="UserInfo" component={UserUserInfoScreen} />
         <Stack.Screen name="ProfileSetting" component={ProfileSettingScreen} />
       </Stack.Navigator>
