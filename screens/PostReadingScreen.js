@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
     View, 
@@ -8,7 +8,8 @@ import {
     Text, 
     TouchableOpacity, 
     Image, 
-    ImageBackground} from 'react-native';
+    ImageBackground,
+    Modal} from 'react-native';
 import colors from '../assets/colors/colors';
 
 const goBackImg = require('../assets/icon_arrow-left.png');
@@ -18,6 +19,7 @@ const likeBtnImg = require('../assets/like_btn.png');
 const commentImg = require('../assets/comment_img2.png');
 const rewriteImg = require('../assets/rewriteBtn.png');
 const replyArrowImg = require('../assets/reply_arrow.png');
+const trashcanGImg = require('../assets/trashcan_green.png');
 
 const postImg = require('../assets/post_image.png');
 const commentData = [
@@ -31,6 +33,16 @@ const commentData = [
 
 
 function UserInfoScreen({navigation}) {
+    const [isVisible, setIsVisible] = useState(false);
+
+    const openPopup = () => {
+        setIsVisible(true);
+    };
+
+    const closePopup = () => {
+        setIsVisible(false);
+    };
+
   return (
     <View style={styles.container}>
         <StatusBar style='auto'></StatusBar>
@@ -83,7 +95,7 @@ function UserInfoScreen({navigation}) {
                                 </View>
                             </View>
                             <View style={{flex:1, alignItems:'flex-end', paddingEnd:10}}>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={openPopup}>
                                     <Image source={trashcanImg}></Image>
                                 </TouchableOpacity>
                             </View>
@@ -253,6 +265,61 @@ function UserInfoScreen({navigation}) {
             </ScrollView>
 
         </View>
+        <Modal visible={isVisible} animationType="slide" transparent={true}>
+            <View style={styles.modalContainer}>
+                <View style={{flex:1}}></View>
+                <View style={styles.modalContent}>
+                    <View style={{
+                        flex:4,
+                        justifyContent:'center',
+                        alignItems:'center',
+                        padding:30,
+                    }}> 
+                        <Image source={trashcanGImg} style={{
+                            marginBottom:10,
+                        }}></Image>              
+                        <Text style={styles.modalText}>해당 게시글을</Text>
+                        <Text style={styles.modalText}>삭제하시겠습니까?</Text>
+                    </View>
+                    <View style={{
+                        flex:2,
+                        flexDirection:'row',
+                        alignItems:'flex-end',
+                    }}>
+                        <View style={{
+                            flex:1,
+                            backgroundColor:'#32B489B2',
+                            padding:10,
+                            alignItems:'center'
+                        }}>
+                            <TouchableOpacity onPress={closePopup}>     
+                                <Text style={{
+                                    fontSize:25,
+                                    color:'white',
+                                }}>취소</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        <View style={{
+                            flex:1,
+                            backgroundColor:'#D9D9D9',
+                            padding:10,
+                            alignItems:'center'
+                        }}>
+                            <TouchableOpacity>     
+                                <Text style={{
+                                    fontSize:25,
+                                    color:'#5E5E5E'
+                                }}>삭제</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        
+                    </View>
+                </View>
+                <View style={{flex:1}}></View>
+            </View>
+        </Modal>
         
         
     </View>
@@ -292,6 +359,20 @@ const styles = StyleSheet.create({
         backgroundColor:'#E2E2E2',
         paddingHorizontal:15,
         paddingTop:15,
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        flex:1,
+        backgroundColor: 'white',
+        
+    },
+    modalText: {
+        fontSize:20,
     },
 
 })
