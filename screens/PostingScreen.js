@@ -21,8 +21,6 @@ function PostingScreen({ navigation }) {
   const [tag, setTag] = useState(null);
   const [content, setContent] = useState(null); 
   const [imageUri, setImageUri] = useState(null);
-  const [imageName, setImageName] = useState(null);
-  const [imageType, setImageType] = useState(null);
 
   const handleTitleChange = (text) => {
     setTitle(text);
@@ -35,19 +33,23 @@ function PostingScreen({ navigation }) {
   };
 
   const handleSubmit = () => {
+
+    const filename = imageUri.split("/").pop();
+    const match = /\.(\w+)$/.exec(filename ?? "");
+    const type = match ? `image/${match[1]}` : `image`;
+
     // API 요청
     const data = new FormData();
     data.append('title', title);
     data.append('content', content);
-    data.append('img', {
-      uri: imageUri,
-      type: imageName, 
-      name: imageType, 
-    });
+    data.append('img', { uri: imageUri, name: filename, type });
     data.append('type', '자유');
     data.append('category_id', 1);
     data.append('user_id', 'test');
 
+    console.log(imageUri);
+    console.log(filename);
+    console.log(type);
     console.log(data);
   
     fetch('http://3.104.80.58:8080/api/v1/board', {
@@ -72,21 +74,18 @@ function PostingScreen({ navigation }) {
   const selectImage = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
         quality: 1,
       });
 
       if (!result.canceled) {
         const selectedAsset = result.assets[0];
         setImageUri(selectedAsset.uri);
-        setImageName(selectedAsset.name);
-        setImageType(selectedAsset.type);
       }
     } catch (error) {
       console.log('Error while selecting image:', error);
     }
+    
   };
 
   return (
