@@ -17,12 +17,12 @@ const imageAdd = require('../assets/image_add.png');
 
 
 function PostingScreen({ navigation }) {
-  const [title, setTitle] = useState('');
-  const [tag, setTag] = useState('');
-  const [content, setContent] = useState(''); 
+  const [title, setTitle] = useState(null);
+  const [tag, setTag] = useState(null);
+  const [content, setContent] = useState(null); 
   const [imageUri, setImageUri] = useState(null);
-  const [imageName, setImageName] = useState('');
-  const [imageType, setImageType] = useState('');
+  const [imageName, setImageName] = useState(null);
+  const [imageType, setImageType] = useState(null);
 
   const handleTitleChange = (text) => {
     setTitle(text);
@@ -48,6 +48,8 @@ function PostingScreen({ navigation }) {
     data.append('category_id', 1);
     data.append('user_id', 'test');
 
+    console.log(data);
+  
     fetch('http://3.104.80.58:8080/api/v1/board', {
       method: 'POST',
       headers: {
