@@ -40,8 +40,8 @@ function ProfileSettingScreen({navigation}) {
             <View style={styles.userInfoList}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {userInfoData.map((userInfo, index) => (
-                        <TouchableOpacity>
-                            <View key={index} style={styles.userInfoItem}>
+                        <TouchableOpacity key={index}>
+                            <View style={styles.userInfoItem}>
                                 <View style={{flex:3}}>
                                     <Text style={styles.userInfoItemText}>{userInfo[0]}</Text>
                                 </View>

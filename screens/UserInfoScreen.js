@@ -39,16 +39,18 @@ function UserInfoScreen({navigation}) {
             <View style={styles.userInfoList}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                 {userInfoData.map((userInfo, index) => (
-                    <TouchableOpacity>
-                        <View key={index} style={styles.userInfoItem}>
+                    <TouchableOpacity key={index}>
+                        <View style={styles.userInfoItem}>
                             <View style={{flex:3}}>
                                 <Text style={styles.userInfoItemText}>{userInfo[0]}</Text>
                                 <Text style={styles.userInfoItemTextSub}>{userInfo[1]}</Text>
                                 <Text style={styles.userInfoItemTextSub}>{userInfo[2]}</Text>
                             </View>
-                            <View style={styles.userInfoArrow}>
-                                <Image source={arrowImg}></Image>
-                            </View>
+                                {index !== 0 && (
+                                    <View style={styles.userInfoArrow}>
+                                        <Image source={arrowImg} />
+                                    </View>
+                                )}
                         </View>
                     </TouchableOpacity>
                 

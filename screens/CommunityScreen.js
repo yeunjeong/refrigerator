@@ -72,7 +72,7 @@ function CommunityScreen({navigation}) {
             <ScrollView showsVerticalScrollIndicator={false}>
                 {postData.map((post, index) => (
                     <View style={styles.postItem}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('PostReading')}>
                             <View key={index} style={styles.postItemUpper}>
                                 <View style={styles.postItemText}>
                                     <Text style={styles.postTag}>{post[0]}</Text>
