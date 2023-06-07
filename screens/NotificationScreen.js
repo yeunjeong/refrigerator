@@ -88,7 +88,10 @@ const styles = StyleSheet.create({
   },
   pageNameText:{
     fontSize:40,
-    color: 'black',
+    color: 'white',
+    backgroundColor:'rgba(0, 0, 0, 0.3)',
+    padding:10,
+    borderRadius:10,
   },
   notification:{
     flex:10,

@@ -12,6 +12,7 @@ import {
   TextInput,
   ScrollView,
   FlatList,
+  Linking ,
 } from "react-native";
 import { FontAwesome, Entypo, Fontisto } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -27,18 +28,36 @@ const communityPageImg = require('../assets/community_page.png');
 
 const recipeData = [
     [
-        '돼지고기 김치찌개 달인이 되는 황금레시피',
-        '돼지고기 감자 양파 대파',
+        '밥 한공기 뚝딱 오겹살 감자 양파 찌개',
+        '돼지고기 감자 양파 대파     청양고추',
+        require('../assets/food1.png'),
     ], [
-        '즉석 목살 양념구이~ 달큰한 양념소스가 정말 맛있습니다.',
-        '목살 달걀 양파',
+        '청양고추로 매콤하게! 물컹하지 않은 식감의 가지볶음 만들기',
+        '가지 대파 청양고추',
+        require('../assets/food2.png'),
     ], [
-        '양배츠 참치덮밥 / Cabbage tuna bowl of rice',
-        '양배추 참치',
+        '감자양파간장조림 황금레시피 요거 별미네',
+        '감자 청양고추 양파',
+        require('../assets/food3.png'),
+    ], [
+        '새우젓으로 애호박 볶음(간단 밑반찬)',
+        '애호박 양파',
+        require('../assets/food4.png'),
+    ], [
+        '청양고추로 간장고추장아찌 만드는법',
+        '청양고추',
+        require('../assets/food5.png'),
     ]];
 
 function Recipe({ route, navigation }) {
+    
     const nickname = '하냥이'
+
+    const handleButtonPress = () => {
+        // 링크 연결
+        Linking.openURL("https://github.com/yeunjeong/refrigerator");
+      };
+
 
   return (
     <View style={headerStyles.container}>
@@ -73,7 +92,7 @@ function Recipe({ route, navigation }) {
                     fontWeight: "bold",
                     fontSize: 16,
                     textAlign: "center",
-                    marginTop: 5,
+                    marginTop: 20,
                     backgroundColor:'rgba(0, 0, 0, 0.3)',
                     padding:10,
                     borderRadius:10,
@@ -85,24 +104,34 @@ function Recipe({ route, navigation }) {
             </View>
 
 
-            <View style={{ width: "100%", paddingTop: 30, flex: 20,}}>
+            <View style={{ paddingTop: 20, flex: 20, paddingHorizontal:20,}}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {recipeData.map((recipe, index) => (
-                        <TouchableOpacity key={index} style={{alignItems:'center'}}>
+                        <View style={{
+                            backgroundColor: "white",
+                            paddingVertical: 15,
+                            paddingHorizontal: 5,
+                            borderRadius: 10,
+                            elevation: 7,
+                            marginBottom: 30,
+                        }}>
+                        <TouchableOpacity key={index} onPress={handleButtonPress}>
                             <View style={{
-                                    flexDirection:'row',
-                                    backgroundColor: "white",
-                                    paddingVertical: 15,
-                                    paddingHorizontal: 5,
-                                    borderRadius: 10,
-                                    elevation: 7,
-                                    marginBottom: 30,
-                                    width: "85%",
+                                flexDirection:'row',
+                                alignItems:'center'
+                                //backgroundColor:'pink'
+                            }}>
+                                <View style={{
+                                    paddingHorizontal:5,
                                 }}>
-                                <View>
-                                    <Image source={communityPageImg}></Image>
+                                    <Image source={recipe[2]} style={{width:110, height:72}}></Image>
                                 </View>
-                                <View style={{flex:3}}>
+                                <View style={{
+                                    //backgroundColor:'yellow',
+                                    paddingVertical:3,
+                                    paddingLeft:7,
+                                    paddingRight:120,
+                                }}>
                                     <Text style={{
                                         fontSize:16,
                                         color:'#4B4B4B',
@@ -116,11 +145,11 @@ function Recipe({ route, navigation }) {
                                 
                             </View>
                         </TouchableOpacity>
+                        </View>
                     
                     ))}
                     </ScrollView>
-                
-                <View style={{ paddingTop: 20 }}>
+                    <View style={{ paddingTop: 20, marginHorizontal:-20 }}>
                     <View style={M_style.tab_st}>
                         <TouchableOpacity>
                             <Image source={recipePageImg} style={M_style.tab_ele_st}></Image>
@@ -132,8 +161,10 @@ function Recipe({ route, navigation }) {
                             <Image source={communityPageImg} style={M_style.tab_ele_st}></Image>
                         </TouchableOpacity>
                     </View>
-                </View>
             </View>
+                
+            </View>
+            
       </ImageBackground>
     </View>
   );
