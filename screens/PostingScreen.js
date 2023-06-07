@@ -34,9 +34,13 @@ function PostingScreen({ navigation }) {
 
   const handleSubmit = () => {
 
-    const filename = imageUri.split("/").pop();
-    const match = /\.(\w+)$/.exec(filename ?? "");
-    const type = match ? `image/${match[1]}` : `image`;
+    const filename = null;
+    const type = null;
+    if(imageUri != null){
+      filename = imageUri.split("/").pop();
+      const match = /\.(\w+)$/.exec(filename ?? "");
+      type = match ? `image/${match[1]}` : `image`;
+    }
 
     // API 요청
     const data = new FormData();

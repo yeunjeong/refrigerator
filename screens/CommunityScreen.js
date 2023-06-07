@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {View, Button, StyleSheet, ScrollView, Text, TouchableOpacity, Image} from 'react-native';
+import moment from 'moment';
+import { useIsFocused } from "@react-navigation/native";
+import axios from 'axios';
+import {View, Button, StyleSheet, ScrollView, Text, TouchableOpacity, Image, ToastAndroid} from 'react-native';
 import colors from '../assets/colors/colors';
 
 const searchImg = require('../assets/search_icon.png');
@@ -15,6 +18,27 @@ const tagMenuData = [['음식 자랑'], ['일상'], ['질문글'], ['기타']];
 const postData = [['tag 1', '글 1', '내용 1', postImg, '23', '3'], ['tag 2', '글 2', '내용 2', postImg], ['tag 3', '글 3', '내용 3'], ['tag 4', '글 4', '내용 4'], ['tag 5', '글 5', '내용 5'], ['tag 6', '글 6', '내용 6']]
 
 function CommunityScreen({navigation}) {
+
+    const [data, setData] = useState([]);
+    
+
+    const load_post = async () => {
+        try {
+        const response = await axios.get(
+            `http://3.104.80.58:8080/api/v1/board/category/2`
+        );
+        setData(response.data);
+        console.log(data);
+        } catch (error) {
+        console.log(error);
+        ToastAndroid.show("불러올 수 없음", ToastAndroid.SHORT);
+        }
+    };
+
+    useEffect(() => {
+        load_post(); // 페이지에 접속하면 load_post 함수를 자동으로 실행
+    }, []);
+
   return (
     
     <View style={headerStyles.container}>
@@ -70,17 +94,17 @@ function CommunityScreen({navigation}) {
       <View style={styles.communityBoard}>
         <View style={styles.postList}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                {postData.map((post, index) => (
-                    <View style={styles.postItem}>
-                        <TouchableOpacity onPress={() => navigation.navigate('PostReading')}>
-                            <View key={index} style={styles.postItemUpper}>
+                {data.map((post, index) => (
+                    <View key={index} style={styles.postItem}>
+                        <TouchableOpacity onPress={() => navigation.navigate('PostReading', { postId: post.id })}>
+                            <View style={styles.postItemUpper}>
                                 <View style={styles.postItemText}>
-                                    <Text style={styles.postTag}>{post[0]}</Text>
-                                    <Text style={styles.postTitle}>{post[1]}</Text>
-                                    <Text style={styles.postContent}>{post[2]}</Text>
+                                    <Text style={styles.postTag}>{post.type}</Text>
+                                    <Text style={styles.postTitle}>{post.title}</Text>
+                                    <Text style={styles.postContent}>{post.content}</Text>
                                 </View>
                                 <View style={styles.postItemImg}>
-                                    <Image style={styles.postImage} source={post[3]}></Image>
+                                    <Image style={styles.postImage} source={{ uri: post.img }}></Image>
                                 </View>
                             </View>
 
@@ -94,14 +118,14 @@ function CommunityScreen({navigation}) {
                                 <TouchableOpacity>
                                     <Image source={likeImg} style={styles.postInfoIcon}></Image>
                                 </TouchableOpacity>
-                                <Text style={styles.postInfoText}>{post[4]}</Text>
+                                <Text style={styles.postInfoText}>0</Text>
                                 <TouchableOpacity>
                                     <Image source={commentImg} style={styles.postInfoIcon}></Image>
                                 </TouchableOpacity>
-                                <Text style={styles.postInfoText}>{post[5]}</Text>
+                                <Text style={styles.postInfoText}>0</Text>
                             </View>
                             <View style={styles.postInfoRight}>
-                                <Text style={styles.postInfoTime}>1분 전</Text>
+                                <Text style={styles.postInfoTime}>{moment(post.created_date_time).fromNow()}</Text>
                             </View>
                         </View>
                     </View>
