@@ -55,7 +55,7 @@ function Recipe({ route, navigation }) {
 
     const handleButtonPress = () => {
         // 링크 연결
-        Linking.openURL("https://github.com/yeunjeong/refrigerator");
+        Linking.openURL("https://www.10000recipe.com/recipe/6972991");
       };
 
 
