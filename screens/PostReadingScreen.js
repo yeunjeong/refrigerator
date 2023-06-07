@@ -23,15 +23,22 @@ const rewriteImg = require('../assets/rewriteBtn.png');
 const replyArrowImg = require('../assets/reply_arrow.png');
 const trashcanGImg = require('../assets/trashcan_green.png');
 
-const postImg = require('../assets/post_image.png');
+const postImg = require('../assets/food1.png');
+const postData = [
+    [
+        '현희',
+        '06/05 14:12',
+        '오늘 저녁은 돼지고기 김치찌개 ㅎ',
+        '맛있겠죠 ~~^^??',
+    ]];
 const commentData = [
     [
         '최윤', 
-        '04/13 14:22', 
+        '06/05 14:22', 
         '우와 너무 맛있어 보여요!! 레시피 공유 가능한가요??', 
-        [['현희', '04/13 14:30', '기름에 양배추랑 베이컨 넣고 달달 볶아서 드시면 돼요 ㅎㅎ 베이컨 많이 넣으면 더 맛있습니당']]
+        [['현희', '06/05 14:30', '기름에 양배추랑 베이컨 넣고 달달 볶아서 드시면 돼요 ㅎㅎ 베이컨 많이 넣으면 더 맛있습니당']]
     ], 
-    ['최윤', '04/13 14:22', '우와 너무 맛있어 보여요!! 레시피 공유 가능한가요??']];
+    ];
 
 
 function UserInfoScreen({navigation, route }) {
@@ -92,7 +99,7 @@ function UserInfoScreen({navigation, route }) {
                 <View style={{
                     paddingHorizontal:20,
                 }}>
-                    {data.length >= 0 && data.map((post, index) => (
+                    {postData.map((post, index) => (
                         <View key={index}>
                             <View style={{
                                 flexDirection:'row',
@@ -110,11 +117,11 @@ function UserInfoScreen({navigation, route }) {
                                         <Text style={{
                                             fontSize:20,
                                             color:'#0EA371',
-                                        }}>{post.user_name}</Text>
+                                        }}>{post[0]}</Text>
                                         <Text style={{
                                             fontSize:14,
                                             color:'#999999',
-                                        }}>{post.created_date_time}</Text>
+                                        }}>{post[1]}</Text>
                                     </View>
                                 </View>
                                 <View style={{flex:1, alignItems:'flex-end', paddingEnd:10}}>
@@ -129,14 +136,16 @@ function UserInfoScreen({navigation, route }) {
                             }}>
                                 <Text style={{
                                     fontSize:20,
-                                }}>{post.content}</Text>
+                                }}>{post[2]}</Text>
                                 <Image source={postImg} style={{
                                     marginVertical:15,
+                                    width:300,
+                                    height:200,
                                 }}></Image>
                                 <Text style={{
                                     fontSize:20,
                                     color:'#4E4E4E'
-                                }}>내가 만들었지만 진짜 잘 만든 양배추 덮밥!!!</Text>
+                                }}>{post[3]}</Text>
                             </View>
                             <View style={{
                                 flexDirection:'row',
@@ -154,7 +163,7 @@ function UserInfoScreen({navigation, route }) {
                                         marginRight:10,
                                         fontSize:15,
                                         color:'#999999',
-                                    }}>23</Text>
+                                    }}>0</Text>
                                     <TouchableOpacity>
                                         <Image source={commentImg} style={{
                                             marginRight:10,
@@ -164,7 +173,7 @@ function UserInfoScreen({navigation, route }) {
                                         marginRight:10,
                                         fontSize:15,
                                         color:'#999999',
-                                    }}>4</Text>
+                                    }}>2</Text>
                                 </View>
                                 <View style={{
                                     flex:1,

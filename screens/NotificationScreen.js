@@ -14,12 +14,12 @@ import colors from '../assets/colors/colors';
 const bgImg = require('../assets/background.png');
 const goBackImg = require('../assets/icon_arrow-left.png');
 const notificationData = [
-  ['2023.04.13', '감자 3알', '1일'],
-  ['2023.04.12', '감자 1알', '1일'],
-  ['2023.04.10', '당근 1개', '1일'],
-  ['2023.04.06', '감자 3알', '2일'],
-  ['2023.04.06', '감자 3알', '1일'],
-  ['2023.04.06', '감자 3알', '1일'],
+  ['2023.06.07', '감자 3알', '1일'],
+  ['2023.06.06', '감자 3알', '2일'],
+  ['2023.06.05', '감자 3알', '3일'],
+  ['2023.06.01', '감자 3알', '7일'],
+  ['2023.05.31', '당근 1개', '3일'],
+  ['2023.05.27', '당근 1개', '7일'],
 ];
 
 function NotificationScreen({ navigation }) {

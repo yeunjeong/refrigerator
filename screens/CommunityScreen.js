@@ -135,11 +135,11 @@ function CommunityScreen({navigation}) {
             
         </View>
         <View style={headerStyles.lowerHeader}>
-            <View style={headerStyles.lowerLeftHeader}>
+            <View style={headerStyles.lowerLeftHeader2}>
                 <TouchableOpacity onPress={() => handleBoardMenuPress()}>
-                    <View style={headerStyles.lowerHeaderBtn}>
-                        <Text style={headerStyles.lowerHeaderBtnText1}>게시판</Text>
-                        <Text style={headerStyles.lowerHeaderBtnText2}>중고거래</Text>
+                    <View style={[headerStyles.lowerHeaderBtn, selectedBoard === 1 && headerStyles.lowerHeaderBtn2]}>
+                        <Text style={[headerStyles.lowerHeaderBtnText1, selectedBoard === 1 && headerStyles.lowerHeaderBtnText12]}>게시판</Text>
+                        <Text style={[headerStyles.lowerHeaderBtnText2, selectedBoard === 1 && headerStyles.lowerHeaderBtnText22]}>중고거래</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -299,6 +299,41 @@ const headerStyles = StyleSheet.create({
     lowerHeaderBtnText2:{
         fontSize:18,
         paddingEnd:15,
+    },
+    
+    lowerHeaderBtn2:{
+        flexDirection:'row',
+        backgroundColor:'white',
+        borderRadius:16,
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    lowerHeaderBtnText12:{
+        backgroundColor:'white',
+        color:'black',
+        fontSize:18,
+        borderColor:'white',
+        borderWidth:1,
+        paddingLeft:14,
+        paddingRight:15,
+        marginRight:-15,
+    },
+    lowerHeaderBtnText22:{
+        backgroundColor:colors.headerBtnGreen,
+        borderRadius:16,
+        borderColor:colors.headerBtnBorderGray,
+        color:'white',
+        borderWidth:1,
+        paddingVertical:7,
+        fontSize:18,
+        paddingHorizontal:15,
+    },
+    lowerLeftHeader:{
+        flex:2,
+        flexDirection:'row',
+        //backgroundColor:'tomato',    
+        justifyContent:'center', 
+        alignItems:'center',        
     },
     lowerRightHeader:{
         flex:2,
