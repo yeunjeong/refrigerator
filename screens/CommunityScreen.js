@@ -12,6 +12,9 @@ const userInfoImg = require('../assets/user_info_icon.png');
 const plusImg = require('../assets/plus_icon.png');
 const likeImg = require('../assets/like_btn.png');
 const commentImg = require('../assets/comment_img.png');
+const recipePageImg = require('../assets/recipe_page.png');
+const refrigeratorPageImg = require('../assets/refrigerator_page.png');
+const communityPageImg = require('../assets/community_page2.png');
 
 const postImg = require('../assets/post_image.png');
 const tagMenuData = [['음식 자랑'], ['일상'], ['질문글'], ['기타']];
@@ -105,7 +108,7 @@ function CommunityScreen({navigation}) {
 
     useEffect(() => {
         load_post(); // 페이지에 접속하면 load_post 함수를 자동으로 실행
-        console.log(selectedTag);
+        //console.log(selectedTag);
     }, [selectedTag, selectedBoard]);
 
   return (
@@ -145,8 +148,8 @@ function CommunityScreen({navigation}) {
                     <Image style={headerStyles.headerButton} source={plusImg}></Image>
                 </TouchableOpacity>
             </View>
-
         </View>
+        
       </View>
       <View style={headerStyles.tagMenu}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -205,11 +208,19 @@ function CommunityScreen({navigation}) {
 
         </View>
         <View style={styles.menuBar}>
-        
+        <View style={M_style.tab_st}>
+            <TouchableOpacity onPress={() => navigation.navigate('Recipe')}>
+                <Image source={recipePageImg} style={M_style.tab_ele_st}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image source={refrigeratorPageImg} style={M_style.tab_ele_st}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image source={communityPageImg} style={M_style.tab_ele_st}></Image>
+            </TouchableOpacity>
+            </View>
         </View>
-
       </View>
-      
     </View>
   );
 }
@@ -411,3 +422,19 @@ const styles = StyleSheet.create({
         borderTopRightRadius:20,
     },
 })
+
+const M_style = StyleSheet.create({
+    tab_st: {
+      flexDirection: "row",
+      paddingTop: 7,
+      paddingHorizontal: 30,
+      justifyContent: "space-between",
+      backgroundColor: "white",
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+    },
+    tab_ele_st: {
+      width: 50,
+      height: 70,
+    },
+  });
