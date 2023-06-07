@@ -15,20 +15,88 @@ const commentImg = require('../assets/comment_img.png');
 
 const postImg = require('../assets/post_image.png');
 const tagMenuData = [['음식 자랑'], ['일상'], ['질문글'], ['기타']];
+const tagMenuData2 = [['살게요'], ['팔게요'], ['나눔해요'], ['공구해요']];
 const postData = [['tag 1', '글 1', '내용 1', postImg, '23', '3'], ['tag 2', '글 2', '내용 2', postImg], ['tag 3', '글 3', '내용 3'], ['tag 4', '글 4', '내용 4'], ['tag 5', '글 5', '내용 5'], ['tag 6', '글 6', '내용 6']]
 
 function CommunityScreen({navigation}) {
-
+    const [selectedBoard, setSelectedBoard] = useState(0);
+    const [selectedTag, setSelectedTag] = useState(0);
+    const [boardTag, setBoardTag] = useState(tagMenuData);
     const [data, setData] = useState([]);
-    
+
+    //게시판 선택
+    const handleBoardMenuPress = async () => {
+        if (selectedBoard === 0) {
+            setSelectedBoard(1);
+            setBoardTag(tagMenuData2);
+            setSelectedTag(4);
+          } else {
+            setSelectedBoard(0);
+            setBoardTag(tagMenuData);
+            setSelectedTag(0);
+          }
+      };
+
+    //태그 선택
+    const handleTagMenuPress = async (index) => {
+        setSelectedTag(index+selectedBoard*4);
+      };
 
     const load_post = async () => {
+
         try {
-        const response = await axios.get(
-            `http://3.104.80.58:8080/api/v1/board/category/2`
-        );
-        setData(response.data);
-        console.log(data);
+            switch (selectedTag) {
+                case 0:
+                  const response1 = await axios.get(
+                    `http://3.104.80.58:8080/api/v1/board/category/1`
+                  );
+                  setData(response1.data);
+                  break;
+                case 1:
+                  const response2 = await axios.get(
+                    `http://3.104.80.58:8080/api/v1/board/category/2`
+                  );
+                  setData(response2.data);
+                  break;
+                case 2:
+                  const response3 = await axios.get(
+                    `http://3.104.80.58:8080/api/v1/board/category/3`
+                  );
+                  setData(response3.data);
+                  break;
+                case 3:
+                  const response4 = await axios.get(
+                    `http://3.104.80.58:8080/api/v1/board/category/4`
+                  );
+                  setData(response4.data);
+                  break;
+                case 4:
+                  const response5 = await axios.get(
+                    `http://3.104.80.58:8080/api/v1/board/category/5`
+                  );
+                  setData(response5.data);
+                  break;
+                case 5:
+                  const response6 = await axios.get(
+                    `http://3.104.80.58:8080/api/v1/board/category/6`
+                  );
+                  setData(response6.data);
+                  break;  
+                case 6:
+                  const response7 = await axios.get(
+                    `http://3.104.80.58:8080/api/v1/board/category/7`
+                  );
+                  setData(response7.data);
+                  break;
+                default:
+                  const response8 = await axios.get(
+                    `http://3.104.80.58:8080/api/v1/board/category/8`
+                  );
+                  setData(response8.data);
+                  break;
+                  
+              }
+        //console.log(data);
         } catch (error) {
         console.log(error);
         ToastAndroid.show("불러올 수 없음", ToastAndroid.SHORT);
@@ -37,7 +105,8 @@ function CommunityScreen({navigation}) {
 
     useEffect(() => {
         load_post(); // 페이지에 접속하면 load_post 함수를 자동으로 실행
-    }, []);
+        console.log(selectedTag);
+    }, [selectedTag, selectedBoard]);
 
   return (
     
@@ -64,7 +133,7 @@ function CommunityScreen({navigation}) {
         </View>
         <View style={headerStyles.lowerHeader}>
             <View style={headerStyles.lowerLeftHeader}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handleBoardMenuPress()}>
                     <View style={headerStyles.lowerHeaderBtn}>
                         <Text style={headerStyles.lowerHeaderBtnText1}>게시판</Text>
                         <Text style={headerStyles.lowerHeaderBtnText2}>중고거래</Text>
@@ -81,10 +150,12 @@ function CommunityScreen({navigation}) {
       </View>
       <View style={headerStyles.tagMenu}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {tagMenuData.map((tagMenu, index) => (
+            {boardTag.map((tagMenu, index) => (
               <View key={index} style={headerStyles.tagMenuItem}>
-                <TouchableOpacity>
-                    <Text style={headerStyles.tagMenuText}>{tagMenu[0]}</Text>
+                <TouchableOpacity onPress={() => handleTagMenuPress(index)}>
+                    <Text style={[headerStyles.tagMenuText, selectedTag%4 === index && headerStyles.selectedTag]}>
+                    {tagMenu[0]}
+                    </Text>
                 </TouchableOpacity>
               </View>
             ))}
@@ -230,6 +301,10 @@ const headerStyles = StyleSheet.create({
         flex:1,
         backgroundColor: "white",
         paddingHorizontal:5,
+    },
+    selectedTag: {
+        backgroundColor: 'gray',
+        color:'white',
     },
     tagMenuItem:{
         marginHorizontal:10,

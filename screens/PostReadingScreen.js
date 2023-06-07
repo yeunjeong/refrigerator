@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import axios from 'axios';
 import {
     View, 
     Button, 
@@ -9,7 +10,8 @@ import {
     TouchableOpacity, 
     Image, 
     ImageBackground,
-    Modal} from 'react-native';
+    Modal,
+    ToastAndroid} from 'react-native';
 import colors from '../assets/colors/colors';
 
 const goBackImg = require('../assets/icon_arrow-left.png');
@@ -32,8 +34,28 @@ const commentData = [
     ['최윤', '04/13 14:22', '우와 너무 맛있어 보여요!! 레시피 공유 가능한가요??']];
 
 
-function UserInfoScreen({navigation}) {
+function UserInfoScreen({navigation, route }) {
     const [isVisible, setIsVisible] = useState(false);
+    const { postId } = route.params;
+    const [data, setData] = useState([]);
+    console.log(postId);
+
+    const load_post = async () => {
+        try {
+        const response = await axios.get(
+            `http://3.104.80.58:8080/api/v1/board/`+postId
+        );
+        setData(response.data);
+        console.log(data);
+        } catch (error) {
+        console.log(error);
+        ToastAndroid.show("불러올 수 없음", ToastAndroid.SHORT);
+        }
+    };
+
+    useEffect(() => {
+        load_post(); // 페이지에 접속하면 load_post 함수를 자동으로 실행
+    }, []);
 
     const openPopup = () => {
         setIsVisible(true);
@@ -70,89 +92,92 @@ function UserInfoScreen({navigation}) {
                 <View style={{
                     paddingHorizontal:20,
                 }}>
-                    <View>
-                        <View style={{
-                            flexDirection:'row',
-                            alignItems:'center'}}>
+                    {data.length >= 0 && data.map((post, index) => (
+                        <View key={index}>
                             <View style={{
-                                flex:3,
                                 flexDirection:'row',
                                 alignItems:'center'}}>
-                                <Image source={profileImg} style={{
-                                    width: 32, 
-                                    height: 32, }}></Image>
                                 <View style={{
-                                    paddingLeft:10,
-                                }}>
-                                    <Text style={{
-                                        fontSize:20,
-                                        color:'#0EA371',
-                                    }}>현희</Text>
-                                    <Text style={{
-                                        fontSize:14,
-                                        color:'#999999',
-                                    }}>04/13 14:12</Text>
+                                    flex:3,
+                                    flexDirection:'row',
+                                    alignItems:'center'}}>
+                                    <Image source={profileImg} style={{
+                                        width: 32, 
+                                        height: 32, }}></Image>
+                                    <View style={{
+                                        paddingLeft:10,
+                                    }}>
+                                        <Text style={{
+                                            fontSize:20,
+                                            color:'#0EA371',
+                                        }}>{post.user_name}</Text>
+                                        <Text style={{
+                                            fontSize:14,
+                                            color:'#999999',
+                                        }}>{post.created_date_time}</Text>
+                                    </View>
+                                </View>
+                                <View style={{flex:1, alignItems:'flex-end', paddingEnd:10}}>
+                                    <TouchableOpacity onPress={openPopup}>
+                                        <Image source={trashcanImg}></Image>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
-                            <View style={{flex:1, alignItems:'flex-end', paddingEnd:10}}>
-                                <TouchableOpacity onPress={openPopup}>
-                                    <Image source={trashcanImg}></Image>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                        <View style={{
-                            paddingHorizontal:15,
-                            paddingTop:15,
-                        }}>
-                            <Text style={{
-                                fontSize:20,
-                            }}>간만에 너무 잘 만든 저녁!!!</Text>
-                            <Image source={postImg} style={{
-                                marginVertical:15,
-                            }}></Image>
-                            <Text style={{
-                                fontSize:20,
-                                color:'#4E4E4E'
-                            }}>내가 만들었지만 진짜 잘 만든 양배추 덮밥!!!</Text>
-                        </View>
-                        <View style={{
-                            flexDirection:'row',
-                            marginTop:15,
-                            marginBottom:10,
-                        }}>
                             <View style={{
-                                flex:2,
-                                flexDirection:'row'
+                                paddingHorizontal:15,
+                                paddingTop:15,
                             }}>
-                                <Image source={likeBtnImg} style={{
-                                    marginRight:10,
+                                <Text style={{
+                                    fontSize:20,
+                                }}>{post.content}</Text>
+                                <Image source={postImg} style={{
+                                    marginVertical:15,
                                 }}></Image>
                                 <Text style={{
-                                    marginRight:10,
-                                    fontSize:15,
-                                    color:'#999999',
-                                }}>23</Text>
-                                <TouchableOpacity>
-                                    <Image source={commentImg} style={{
-                                        marginRight:10,
-                                    }}></Image>
-                                </TouchableOpacity>
-                                <Text style={{
-                                    marginRight:10,
-                                    fontSize:15,
-                                    color:'#999999',
-                                }}>4</Text>
+                                    fontSize:20,
+                                    color:'#4E4E4E'
+                                }}>내가 만들었지만 진짜 잘 만든 양배추 덮밥!!!</Text>
                             </View>
                             <View style={{
-                                flex:1,
-                                alignItems:'flex-end',
+                                flexDirection:'row',
+                                marginTop:15,
+                                marginBottom:10,
                             }}>
-                                <TouchableOpacity onPress={() => navigation.navigate('PostRewriting')}>
-                                    <Image source={rewriteImg}></Image>
-                                </TouchableOpacity>
+                                <View style={{
+                                    flex:2,
+                                    flexDirection:'row'
+                                }}>
+                                    <Image source={likeBtnImg} style={{
+                                        marginRight:10,
+                                    }}></Image>
+                                    <Text style={{
+                                        marginRight:10,
+                                        fontSize:15,
+                                        color:'#999999',
+                                    }}>23</Text>
+                                    <TouchableOpacity>
+                                        <Image source={commentImg} style={{
+                                            marginRight:10,
+                                        }}></Image>
+                                    </TouchableOpacity>
+                                    <Text style={{
+                                        marginRight:10,
+                                        fontSize:15,
+                                        color:'#999999',
+                                    }}>4</Text>
+                                </View>
+                                <View style={{
+                                    flex:1,
+                                    alignItems:'flex-end',
+                                }}>
+                                    <TouchableOpacity onPress={() => navigation.navigate('PostRewriting')}>
+                                        <Image source={rewriteImg}></Image>
+                                    </TouchableOpacity>
+                                </View>
+                                
                             </View>
                         </View>
-                    </View>
+                    ))}
                 </View>
                 
                 {commentData.map((comment, index) => (
